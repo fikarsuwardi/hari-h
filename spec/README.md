@@ -15,6 +15,7 @@
 | [04-features.md](04-features.md) | Rincian fitur per subsistem |
 | [05-rendering-engine.md](05-rendering-engine.md) | Mesin render tema undangan (template data-driven) |
 | [06-roadmap.md](06-roadmap.md) | Dekomposisi jadi sub-proyek bertahap |
+| [07-design-system.md](07-design-system.md) | Design system "Rukos" (token, tipografi, komponen) |
 
 ## Sumber Referensi
 
