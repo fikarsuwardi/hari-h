@@ -14,7 +14,11 @@ export async function signIn(_prev: unknown, formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
   if (error) return { error: "Email atau kata sandi salah." };
 
-  const redirectTo = (formData.get("redirect") as string) || "/dashboard";
+  const raw = formData.get("redirect");
+  const redirectTo =
+    typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//")
+      ? raw
+      : "/dashboard";
   revalidatePath("/", "layout");
   redirect(redirectTo);
 }

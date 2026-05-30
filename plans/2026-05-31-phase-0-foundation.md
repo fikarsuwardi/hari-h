@@ -1238,4 +1238,20 @@ Expected: push sukses ke `https://github.com/fikarsuwardi/hari-h`.
 **Placeholder scan:** tidak ada TODO/TBD; semua step berisi kode/perintah nyata.
 
 **Type consistency:** `createClient()` konsisten (browser vs server di file berbeda, nama sama by design). Schema Zod (`loginSchema`, `registerSchema`, `resetSchema`) dipakai konsisten di `actions.ts`. Nama kolom SQL cocok dgn metadata signup (`full_name`, `phone`).
+
+---
+
+## Known Issues / Deferred (dari final code review)
+
+Sudah diperbaiki di Fase 0:
+- ✅ Open-redirect di `signIn` — `redirect` param kini divalidasi (harus diawali `/`, bukan `//`).
+- ✅ `lint` script — `next lint` dihapus di Next 16 → diganti `eslint .` + ignore `example/`, output test.
+- ✅ Next 16 — `middleware.ts` → `proxy.ts`.
+
+Di-defer ke fase yang mengaktifkan fiturnya (bukan blocker Fase 0):
+- **`resellers` RLS tanpa policy** (Fase 5): RLS aktif tapi belum ada policy → fail-closed (deny-all), bukan kebocoran. Saat fitur reseller dibangun, tambah: `create policy "resellers_self_select" on resellers for select using (auth.uid() = user_id);`
+- **`rsvps` insert `with check (true)`** (Fase 3): aman secara default tapi abusable (anon bisa insert ke invitation mana pun). Saat guest flow dibangun, ketatkan jadi `with check (exists (select 1 from invitations i where i.id = invitation_id and i.status = 'active'))` + rate limit/captcha di app layer.
+- **`signUp` membocorkan `error.message`** (account enumeration) — pertimbangkan pesan generik konsisten dgn `signIn`.
+- **Email confirmation Supabase** ON by default → signUp via API butuh konfirmasi email (kena rate limit free-tier saat tes). Untuk dev matikan "Confirm email" di Auth settings; produksi pakai SMTP/Resend (Fase 5).
+- **jsdom 27 ESM bug** → test unit pakai `// @vitest-environment node`. Saat ada test komponen React (Fase 2), ganti `jsdom` → `happy-dom`.
 ```
