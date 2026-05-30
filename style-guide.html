@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rukos — Style Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Surfaces */
+      --paper: #fbf8f1;
+      --paper-2: #f4eee1;
+      --card: #ffffff;
+      --line: #ece4d4;
+      --line-strong: #ddd2bc;
+      /* Ink (text) */
+      --ink: #1b3a2f;
+      --ink-2: #46544c;
+      --ink-3: #7d8a82;
+      /* Brand */
+      --brand: #1b4332;
+      --brand-soft: #e7efe9;
+      --clay: #c2410c;
+      --clay-press: #9a3208;
+      --clay-soft: #fbeadf;
+      /* Semantic */
+      --pos: #2d6a4f;
+      --pos-soft: #e3f0e8;
+      --neg: #b3261e;
+      --neg-soft: #fbe6e3;
+      --warn: #b0790f;
+      --warn-soft: #f8eed6;
+      --deposit: #3f5e6c;
+      --deposit-soft: #e6eef1;
+      /* Typography */
+      --display: "Fraunces", Georgia, "Times New Roman", serif;
+      --sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      /* Shape */
+      --r-sm: 10px;
+      --r: 16px;
+      --r-lg: 22px;
+      --shadow: 0 1px 2px rgba(27, 58, 47, 0.04), 0 8px 24px -12px rgba(27, 58, 47, 0.18);
+      --shadow-lg: 0 12px 40px -12px rgba(27, 58, 47, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.5;
+      padding: 48px 24px 80px;
+    }
+
+    .container { max-width: 980px; margin: 0 auto; }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 2.6rem;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+    }
+
+    .sub {
+      color: var(--ink-3);
+      margin: 0 0 48px;
+      font-size: 1rem;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: -0.01em;
+      margin: 56px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin: 28px 0 12px;
+    }
+
+    /* Color palette grid */
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .swatch {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .swatch .chip {
+      height: 100px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .swatch .meta {
+      padding: 14px 16px;
+    }
+
+    .swatch .name {
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin: 0 0 4px;
+    }
+
+    .swatch .hex {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--ink-2);
+      margin: 0 0 2px;
+    }
+
+    .swatch .use {
+      font-size: 0.74rem;
+      color: var(--ink-3);
+      margin: 0;
+    }
+
+    /* Typography section */
+    .type-row {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 22px 24px;
+      margin-bottom: 10px;
+    }
+
+    .type-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 6px;
+    }
+
+    .display-xl { font-family: var(--display); font-weight: 600; font-size: 2.6rem; letter-spacing: -0.02em; line-height: 1.1; }
+    .display-lg { font-family: var(--display); font-weight: 600; font-size: 1.8rem; letter-spacing: -0.01em; }
+    .display-md { font-family: var(--display); font-weight: 500; font-size: 1.3rem; }
+    .sans-lg    { font-family: var(--sans); font-weight: 700; font-size: 1.05rem; }
+    .sans-md    { font-family: var(--sans); font-weight: 500; font-size: 0.95rem; }
+    .sans-sm    { font-family: var(--sans); font-weight: 500; font-size: 0.82rem; color: var(--ink-2); }
+    .sans-xs    { font-family: var(--sans); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+
+    /* Component preview */
+    .components {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .comp {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 18px 18px 22px;
+    }
+
+    .comp h4 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin: 0 0 12px;
+    }
+
+    .btn {
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 12px;
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 0.92rem;
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary { background: var(--brand); color: #fff; }
+    .btn-clay { background: var(--clay); color: #fff; }
+    .btn-deposit { background: var(--deposit); color: #fff; }
+    .btn-quiet { background: var(--paper-2); color: var(--ink-2); height: 40px; padding: 0 14px; border-radius: 11px; font-size: .85rem; }
+    .btn-ghost { background: transparent; color: var(--ink-2); border: 1px solid var(--line-strong); height: 40px; padding: 0 14px; border-radius: 11px; font-size: .85rem; }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .badge.paid { background: var(--pos-soft); color: var(--pos); }
+    .badge.unpaid { background: var(--warn-soft); color: var(--warn); }
+    .badge.overdue { background: var(--neg-soft); color: var(--neg); }
+    .badge.upcoming { background: var(--brand-soft); color: var(--brand); }
+    .badge.deposit { background: var(--deposit-soft); color: var(--deposit); }
+    .badge.empty { background: var(--paper-2); color: var(--ink-3); }
+
+    .badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .demo-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 14px 16px;
+    }
+
+    .demo-card .label { font-size: 0.78rem; color: var(--ink-3); }
+    .demo-card .value { font-family: var(--display); font-weight: 600; font-size: 1.4rem; color: var(--ink); margin-top: 4px; }
+
+    /* Radius & shadow scale */
+    .scale-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+    }
+
+    .scale-item {
+      background: var(--card);
+      padding: 24px;
+      text-align: center;
+      border: 1px solid var(--line);
+    }
+    .scale-item.sm { border-radius: var(--r-sm); }
+    .scale-item.md { border-radius: var(--r); }
+    .scale-item.lg { border-radius: var(--r-lg); }
+
+    .shadow-sm { box-shadow: var(--shadow); }
+    .shadow-lg { box-shadow: var(--shadow-lg); }
+
+    .scale-item .v {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--ink-2);
+    }
+
+    .scale-item .n {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 6px;
+    }
+
+    /* Theme variant tags */
+    .theme-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .theme-pill.owner { background: var(--brand-soft); color: var(--brand); }
+    .theme-pill.admin { background: var(--deposit-soft); color: var(--deposit); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Rukos — Style Guide</h1>
+    <p class="sub">Reference palet, typography, dan komponen. Cream sebagai dasar, hijau kost (brand) sebagai aksen utama, deposit (biru-abu) untuk admin panel.</p>
+
+    <h2>Surfaces & Lines</h2>
+    <p class="sub" style="margin-bottom:20px">Latar belakang utama + warna kartu, batas, dan garis.</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#fbf8f1"></div><div class="meta"><p class="name">--paper</p><p class="hex">#fbf8f1</p><p class="use">Background utama (cream)</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#f4eee1"></div><div class="meta"><p class="name">--paper-2</p><p class="hex">#f4eee1</p><p class="use">Subtle surface (chip aktif, btn-quiet)</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#ffffff;border-bottom:1px solid #ece4d4"></div><div class="meta"><p class="name">--card</p><p class="hex">#ffffff</p><p class="use">Kartu konten</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#ece4d4"></div><div class="meta"><p class="name">--line</p><p class="hex">#ece4d4</p><p class="use">Garis halus</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#ddd2bc"></div><div class="meta"><p class="name">--line-strong</p><p class="hex">#ddd2bc</p><p class="use">Garis tegas / button ghost border</p></div></div>
+    </div>
+
+    <h2>Ink (Teks)</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#1b3a2f"></div><div class="meta"><p class="name">--ink</p><p class="hex">#1b3a2f</p><p class="use">Teks utama (almost-black green)</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#46544c"></div><div class="meta"><p class="name">--ink-2</p><p class="hex">#46544c</p><p class="use">Teks sekunder</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#7d8a82"></div><div class="meta"><p class="name">--ink-3</p><p class="hex">#7d8a82</p><p class="use">Muted (caption, helper text)</p></div></div>
+    </div>
+
+    <h2>Brand <span class="theme-pill owner">Owner App</span></h2>
+    <p class="sub" style="margin-bottom:20px">Hijau kost — identitas utama untuk PWA owner.</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#1b4332"></div><div class="meta"><p class="name">--brand</p><p class="hex">#1b4332</p><p class="use">Primary button, brand mark, ikon Rukos</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#e7efe9"></div><div class="meta"><p class="name">--brand-soft</p><p class="hex">#e7efe9</p><p class="use">Background lembut / badge brand</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#c2410c"></div><div class="meta"><p class="name">--clay</p><p class="hex">#c2410c</p><p class="use">Aksen oranye (rare — call-to-action sekunder)</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#9a3208"></div><div class="meta"><p class="name">--clay-press</p><p class="hex">#9a3208</p><p class="use">Clay pressed state</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#fbeadf"></div><div class="meta"><p class="name">--clay-soft</p><p class="hex">#fbeadf</p><p class="use">Background lembut clay</p></div></div>
+    </div>
+
+    <h2>Semantic — Status</h2>
+    <p class="sub" style="margin-bottom:20px">Warna status untuk tagihan, deposit, dan peringatan.</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#2d6a4f"></div><div class="meta"><p class="name">--pos / paid</p><p class="hex">#2d6a4f</p><p class="use">Lunas, pemasukan, positif</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#e3f0e8"></div><div class="meta"><p class="name">--pos-soft</p><p class="hex">#e3f0e8</p><p class="use">Badge "Lunas"</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#b3261e"></div><div class="meta"><p class="name">--neg / overdue</p><p class="hex">#b3261e</p><p class="use">Terlambat, pengeluaran, error</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#fbe6e3"></div><div class="meta"><p class="name">--neg-soft</p><p class="hex">#fbe6e3</p><p class="use">Badge "Terlambat"</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#b0790f"></div><div class="meta"><p class="name">--warn / upcoming</p><p class="hex">#b0790f</p><p class="use">Jatuh tempo, perhatian</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#f8eed6"></div><div class="meta"><p class="name">--warn-soft</p><p class="hex">#f8eed6</p><p class="use">Badge upcoming</p></div></div>
+    </div>
+
+    <h2>Deposit <span class="theme-pill admin">Admin Panel</span></h2>
+    <p class="sub" style="margin-bottom:20px">Biru-abu untuk deposit/liability dan sebagai aksen tema Admin Panel (membedakan dari brand owner).</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#3f5e6c"></div><div class="meta"><p class="name">--deposit</p><p class="hex">#3f5e6c</p><p class="use">Deposit / liability + Admin theme</p></div></div>
+      <div class="swatch"><div class="chip" style="background:#e6eef1"></div><div class="meta"><p class="name">--deposit-soft</p><p class="hex">#e6eef1</p><p class="use">Background lembut</p></div></div>
+    </div>
+
+    <h2>Typography</h2>
+    <p class="sub" style="margin-bottom:20px">Dua keluarga font: <strong>Fraunces</strong> (serif) untuk display & angka penting, <strong>Plus Jakarta Sans</strong> untuk body & UI.</p>
+
+    <div class="type-row">
+      <div class="type-label">display-xl · Fraunces 600 · 2.6rem · letter-spacing -0.02em</div>
+      <div class="display-xl">Kelola kost dengan tenang</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">display-lg · Fraunces 600 · 1.8rem</div>
+      <div class="display-lg">Rp 5.250.000</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">display-md · Fraunces 500 · 1.3rem</div>
+      <div class="display-md">Laporan Kas Mei 2026</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">sans-lg · Jakarta 700 · 1.05rem</div>
+      <div class="sans-lg">Penyewa aktif</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">sans-md · Jakarta 500 · 0.95rem (body default)</div>
+      <div class="sans-md">Tagihan akan dikirim H-1 sebelum jatuh tempo via WhatsApp dari nomor resmi Rukos.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">sans-sm · Jakarta 500 · 0.82rem</div>
+      <div class="sans-sm">Total deposit dipegang owner: Rp 4.500.000</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">sans-xs · Jakarta 500 · 0.72rem · uppercase · tracking 0.06em</div>
+      <div class="sans-xs">Section label</div>
+    </div>
+
+    <h2>Components</h2>
+    <div class="components">
+      <div class="comp">
+        <h4>Buttons</h4>
+        <div class="btn-row">
+          <button class="btn btn-primary">Simpan</button>
+          <button class="btn btn-clay">Klaim</button>
+          <button class="btn btn-deposit">Admin Action</button>
+        </div>
+        <div class="btn-row" style="margin-top:10px">
+          <button class="btn btn-quiet">Export</button>
+          <button class="btn btn-ghost">Batal</button>
+        </div>
+      </div>
+
+      <div class="comp">
+        <h4>Badges (status)</h4>
+        <div class="badge-row">
+          <span class="badge paid">Lunas</span>
+          <span class="badge upcoming">Akan datang</span>
+          <span class="badge unpaid">Jatuh tempo</span>
+          <span class="badge overdue">Terlambat 5 hari</span>
+          <span class="badge deposit">Deposit</span>
+          <span class="badge empty">Kosong</span>
+        </div>
+      </div>
+
+      <div class="comp">
+        <h4>Stat card</h4>
+        <div class="demo-card">
+          <div class="label">Pemasukan bulan ini</div>
+          <div class="value" style="color:var(--pos)">Rp 5.250.000</div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <h4>Ink scale</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="color:var(--ink);font-weight:700">Teks utama (ink)</div>
+          <div style="color:var(--ink-2)">Teks sekunder (ink-2)</div>
+          <div style="color:var(--ink-3);font-size:.82rem">Caption muted (ink-3)</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Radius scale</h2>
+    <div class="scale-grid">
+      <div class="scale-item sm shadow-sm"><div class="n">--r-sm</div><div class="v">10px</div></div>
+      <div class="scale-item md shadow-sm"><div class="n">--r</div><div class="v">16px</div></div>
+      <div class="scale-item lg shadow-sm"><div class="n">--r-lg</div><div class="v">22px</div></div>
+    </div>
+
+    <h2>Shadow scale</h2>
+    <div class="scale-grid">
+      <div class="scale-item md shadow-sm"><div class="n">--shadow</div><div class="v" style="text-align:left;margin-top:8px;line-height:1.4">0 1px 2px rgba(27,58,47,.04),<br>0 8px 24px -12px rgba(27,58,47,.18)</div></div>
+      <div class="scale-item md shadow-lg"><div class="n">--shadow-lg</div><div class="v" style="text-align:left;margin-top:8px;line-height:1.4">0 12px 40px -12px rgba(27,58,47,.28)</div></div>
+    </div>
+
+    <h2>Tone aturan</h2>
+    <div class="comp" style="background:var(--card);padding:22px 26px;line-height:1.7;font-size:.92rem">
+      <p style="margin:0 0 10px"><strong>Owner App:</strong> brand hijau (<code>--brand</code>) di tombol utama, ikon, dan brand mark. Card putih di atas paper cream. Status pakai semantic colors (paid/upcoming/unpaid/overdue).</p>
+      <p style="margin:0 0 10px"><strong>Admin Panel:</strong> ditandai class <code>.admin-theme</code>. Brand mark + nav active state ganti ke <code>--deposit</code> (#3f5e6c). Tombol primary di form admin pakai background <code>--deposit</code>. Memberi sinyal visual jelas: "ini area internal".</p>
+      <p style="margin:0"><strong>Display vs Sans:</strong> Fraunces hanya untuk display & angka penting (Rupiah, judul). Sans Jakarta untuk semua body, label, tombol, dan UI controls. Tidak campur dalam satu kalimat.</p>
+    </div>
+  </div>
+</body>
+</html>
