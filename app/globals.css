@@ -1,26 +1,45 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* ─── Colors ─────────────────────────────────────────────────────────── */
+  --color-paper:        #fbf8f1;
+  --color-paper-2:      #f4eee1;
+  --color-card:         #ffffff;
+  --color-line:         #ece4d4;
+  --color-line-strong:  #ddd2bc;
+  --color-ink:          #1b3a2f;
+  --color-ink-2:        #46544c;
+  --color-ink-3:        #7d8a82;
+  --color-brand:        #1b4332;
+  --color-brand-soft:   #e7efe9;
+  --color-clay:         #c2410c;
+  --color-clay-press:   #9a3208;
+  --color-clay-soft:    #fbeadf;
+  --color-pos:          #2d6a4f;
+  --color-pos-soft:     #e3f0e8;
+  --color-neg:          #b3261e;
+  --color-neg-soft:     #fbe6e3;
+  --color-warn:         #b0790f;
+  --color-warn-soft:    #f8eed6;
+  --color-deposit:      #3f5e6c;
+  --color-deposit-soft: #e6eef1;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* ─── Typography ──────────────────────────────────────────────────────── */
+  --font-display: var(--font-fraunces), serif;
+  --font-sans:    var(--font-jakarta), system-ui, sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* ─── Border radius ───────────────────────────────────────────────────── */
+  --radius-sm:      10px;
+  --radius-DEFAULT: 16px;
+  --radius-lg:      22px;
+
+  /* ─── Box shadows ─────────────────────────────────────────────────────── */
+  --shadow-DEFAULT: 0 1px 2px rgba(27,58,47,.04), 0 8px 24px -12px rgba(27,58,47,.18);
+  --shadow-lg:      0 12px 40px -12px rgba(27,58,47,.28);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
 }
