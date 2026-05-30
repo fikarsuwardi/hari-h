@@ -20,6 +20,10 @@ next-env.d.ts
 **/supabase/.branches
 **/supabase/.temp
 
+# Playwright
+/test-results/
+/playwright-report/
+
 # Misc
 .DS_Store
 *.pem
