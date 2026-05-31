@@ -1,5 +1,6 @@
 import type { InvitationView } from "@/lib/invitation/types";
 import { MusicToggle } from "@/components/invitation/ui/music-toggle";
+import { RsvpSection } from "@/components/invitation/ui/rsvp-section";
 import { Cover, QuoteSection, CoupleSection, EventsSection, GallerySection, GiftSection, Closing } from "./sections";
 import s from "./styles.module.css";
 
@@ -13,6 +14,7 @@ export default function MinimalisO1({ view, guestName }: { view: InvitationView;
       <EventsSection data={data} />
       <GallerySection data={data} />
       <GiftSection data={data} />
+      <RsvpSection slug={view.slug} guestName={guestName} />
       <Closing data={data} />
       {data.musicUrl && <MusicToggle src={data.musicUrl} />}
     </main>
