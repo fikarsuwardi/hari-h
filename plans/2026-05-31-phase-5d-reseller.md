@@ -292,3 +292,14 @@ test("admin resellers butuh login", async ({ page }) => {
 **Type consistency:** `applyReseller`/`approveReseller`/`rejectReseller` dipakai konsisten. RLS: self insert hanya `status='pending'` + `auth.uid()=user_id`; admin via `is_admin()`. Approval set `profiles.role='reseller'` (diizinkan trigger 0007 karena admin). `resellers.code` unik (Fase 0) + retry 23505. Unik `user_id` (index baru) cegah daftar ganda.
 
 **Keamanan:** Insert reseller dibatasi RLS (`auth.uid()=user_id`, status pending) — user tak bisa langsung bikin dirinya active. Approval (set active + role) hanya admin. Trigger 0007 tetap mencegah self-escalation role oleh non-admin.
+
+## Known Issues / Deferred (dari final review Fase 5d)
+
+Sudah diperbaiki:
+- ✅ I1: `approveReseller` kini cek error update `profiles` (hindari zombie state status-active-tapi-role-belum).
+- ✅ I2: `commission_rate` di-clamp 0..100 di action + constraint DB (`0010`).
+
+Di-defer:
+- Atribusi `?ref=CODE` & pelacakan komisi (butuh transaksi Fase 4).
+- E2E happy-path apply/approve (diverifikasi live; belum jadi test commit).
+- `reseller-apply` link pakai `window.location.origin` (kosong saat SSR awal; copy tetap jalan) — bisa diperbaiki via header origin.

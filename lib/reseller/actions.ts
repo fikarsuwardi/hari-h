@@ -40,11 +40,13 @@ async function adminGuard() {
 export async function approveReseller(resellerId: string, commissionRate: number) {
   const { supabase, ok } = await adminGuard();
   if (!ok) return { error: "Akses ditolak." };
+  const rate = Math.max(0, Math.min(100, isFinite(commissionRate) ? commissionRate : 0));
   const { data: r } = await supabase.from("resellers").select("user_id").eq("id", resellerId).maybeSingle();
   if (!r) return { error: "Tidak ditemukan." };
-  const { error: e1 } = await supabase.from("resellers").update({ status: "active", commission_rate: commissionRate }).eq("id", resellerId);
+  const { error: e1 } = await supabase.from("resellers").update({ status: "active", commission_rate: rate }).eq("id", resellerId);
   if (e1) return { error: "Gagal menyetujui." };
-  await supabase.from("profiles").update({ role: "reseller" }).eq("id", r.user_id);
+  const { error: e2 } = await supabase.from("profiles").update({ role: "reseller" }).eq("id", r.user_id);
+  if (e2) return { error: "Status reseller aktif, tapi gagal memperbarui role user. Coba lagi." };
   revalidatePath("/admin/resellers");
   return { success: "Reseller disetujui." };
 }
