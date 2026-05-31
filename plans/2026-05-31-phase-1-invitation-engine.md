@@ -892,3 +892,17 @@ git commit -m "test: add e2e for public invitation rendering"
 - Tema render section yang datanya ada; love story belum punya section khusus (data didukung schema, section bisa ditambah saat dibutuhkan).
 - `<img>` dipakai langsung (bukan next/image) untuk kesederhanaan tema + URL eksternal Supabase Storage; optimisasi gambar bisa menyusul.
 - RSVP & livestream & prewed video: data didukung, UI menyusul (Fase 3).
+
+## Known Issues / Deferred (dari final code review Fase 1)
+
+Sudah diperbaiki:
+- ✅ RPC kini cek `expires_at` & `themes.is_active` (tidak menyajikan undangan kadaluwarsa/tema nonaktif).
+- ✅ OG image `notFound()` untuk slug invalid (bukan gambar kosong).
+- ✅ `schema`/`types` inner field `.nullish()` konsisten (Postgres null).
+- ✅ Log error parse di server (mempermudah debug Fase 2).
+- ✅ Hapus `meta.ts` yang tidak terpakai.
+
+Di-defer:
+- **Cache staleness ≤5 mnt** (`unstable_cache revalidate: 300`): saat owner non-aktifkan/hapus undangan, halaman publik bisa tetap tampil maksimal 5 menit. Fase 2 wajib panggil `revalidateTag('invitation:<slug>')` pada setiap mutasi status/data.
+- **Timezone**: countdown & format tanggal mengasumsikan WIB (aman untuk Indonesia barat). Saat dukung multi-zona (WITA/WIT), simpan offset eksplisit per-event.
+- **Expiry automation**: belum ada job yang flip `active`→`expired`. RPC kini sudah filter `expires_at`, tapi status DB belum diupdate otomatis (Fase 4, monetisasi/trial).
