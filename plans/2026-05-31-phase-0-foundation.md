@@ -1252,6 +1252,6 @@ Di-defer ke fase yang mengaktifkan fiturnya (bukan blocker Fase 0):
 - **`resellers` RLS tanpa policy** (Fase 5): RLS aktif tapi belum ada policy → fail-closed (deny-all), bukan kebocoran. Saat fitur reseller dibangun, tambah: `create policy "resellers_self_select" on resellers for select using (auth.uid() = user_id);`
 - **`rsvps` insert `with check (true)`** (Fase 3): aman secara default tapi abusable (anon bisa insert ke invitation mana pun). Saat guest flow dibangun, ketatkan jadi `with check (exists (select 1 from invitations i where i.id = invitation_id and i.status = 'active'))` + rate limit/captcha di app layer.
 - **`signUp` membocorkan `error.message`** (account enumeration) — pertimbangkan pesan generik konsisten dgn `signIn`.
-- **Email confirmation Supabase** ON by default → signUp via API butuh konfirmasi email (kena rate limit free-tier saat tes). Untuk dev matikan "Confirm email" di Auth settings; produksi pakai SMTP/Resend (Fase 5).
+- **Email confirmation Supabase** — **DIMATIKAN** (revisi: pendaftaran sederhana ala walimatul, tanpa OTP/verifikasi). `signUp` kini auto-login ke `/dashboard`. Wajib matikan toggle "Confirm email" di *Supabase → Authentication → Sign In / Up → Email* agar tanpa email & tanpa rate-limit. (Reset password tetap pakai email link.)
 - **jsdom 27 ESM bug** → test unit pakai `// @vitest-environment node`. Saat ada test komponen React (Fase 2), ganti `jsdom` → `happy-dom`.
 ```
