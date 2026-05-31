@@ -7,6 +7,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     { label: "Tema", href: "/admin/themes" },
     { label: "Paket", href: "/admin/packages" },
     { label: "User", href: "/admin/users" },
+    { label: "Reseller", href: "/admin/resellers" },
   ];
   return (
     <div className="flex min-h-screen">
