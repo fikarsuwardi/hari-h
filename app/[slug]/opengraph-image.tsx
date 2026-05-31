@@ -21,9 +21,9 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
           alignItems: "center", justifyContent: "center", background: "#faf6ef", color: "#2b2b2b",
         }}
       >
-        <div style={{ fontSize: 28, letterSpacing: 6, color: "#7c8b78", textTransform: "uppercase" }}>The Wedding Of</div>
-        <div style={{ fontSize: 92, marginTop: 12 }}>{groom} &amp; {bride}</div>
-        {date && <div style={{ fontSize: 34, marginTop: 16, color: "#6b6b6b" }}>{date}</div>}
+        <div style={{ display: "flex", fontSize: 28, letterSpacing: 6, color: "#7c8b78", textTransform: "uppercase" }}>The Wedding Of</div>
+        <div style={{ display: "flex", fontSize: 92, marginTop: 12 }}>{groom} {"&"} {bride}</div>
+        <div style={{ display: "flex", fontSize: 34, marginTop: 16, color: "#6b6b6b" }}>{date}</div>
       </div>
     ),
     { ...size },
