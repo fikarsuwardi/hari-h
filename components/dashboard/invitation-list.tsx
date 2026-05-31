@@ -1,5 +1,6 @@
 "use client";
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { activateInvitation, deactivateInvitation, deleteInvitation } from "@/lib/invitation/actions";
 
@@ -14,13 +15,14 @@ const STATUS: Record<string, { label: string; cls: string }> = {
 export function InvitationList({ items }: { items: Item[] }) {
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState("");
+  const router = useRouter();
   if (!items.length) return <p className="text-ink-3">Belum ada undangan. Klik &quot;Buat Undangan&quot;.</p>;
 
   function run(fn: () => Promise<{ error?: string; success?: string }>) {
     start(async () => {
       const r = await fn();
       setMsg(r.error ?? r.success ?? "");
-      location.reload();
+      router.refresh();
     });
   }
   async function share(slug: string) {

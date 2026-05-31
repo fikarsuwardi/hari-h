@@ -883,3 +883,17 @@ test("preview tema publik render", async ({ page }) => {
 **Type consistency:** `InvitationData`/`Person`/`EventItem`/`GiftAccount` dipakai konsisten di editor, owner.ts, actions.ts. `updateInvitation(id, title, data)` dipanggil dgn signature sama di editor. `toDbColumns` memetakan camelCase→snake_case sesuai kolom `invitation_data` (love_story, prewed_video_url, music_url). `getOwnedInvitation` memetakan balik snake→camel. Server actions mengembalikan `{ error? , success? }` konsisten dengan pemakaian di client (`useActionState`/`useTransition`).
 
 **Catatan keamanan:** Semua action cek `user` + kepemilikan (`inv.user_id === user.id`) selain mengandalkan RLS (defense in depth). Upload Storage dibatasi folder `{uid}/...` via policy. `redirect()` di create action dipanggil di top-level action (aman).
+
+## Known Issues / Deferred (dari final code review Fase 2)
+
+Sudah diperbaiki:
+- ✅ Slug race: insert unique-violation (23505) dipetakan ke pesan "Link sudah dipakai".
+- ✅ Privasi: `deactivate`/`delete` pakai `updateTag` (expiry langsung), `activate`/`save` tetap `revalidateTag` (SWR).
+- ✅ Validasi skema: `mapsUrl`/`musicUrl` wajib `http(s)://` (cegah `javascript:` self-XSS).
+- ✅ `invitation-list` pakai `router.refresh()` (pesan feedback tidak hilang).
+- ✅ Hydration mismatch `Countdown` (Date.now saat render) diperbaiki — nilai stabil saat SSR, hitung setelah mount via rAF/interval.
+
+Di-defer:
+- **Upload**: ekstensi diambil dari nama file & batas 5MB hanya di client. Pertimbangkan whitelist tipe + `file_size_limit` bucket bila ada potensi abuse.
+- **Galeri multi-upload, love story, livestream, prewed video**: UI menyusul (data sudah didukung schema).
+- **Expiry automation**: status `active`→`expired` belum otomatis (Fase 4). RPC publik sudah filter `expires_at`.

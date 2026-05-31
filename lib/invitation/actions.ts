@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { revalidateTag } from "next/cache";
+import { revalidateTag, updateTag } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { createInvitationSchema } from "@/lib/validation/invitation";
 import { invitationDataSchema } from "./schema";
@@ -31,7 +31,12 @@ export async function createInvitation(_prev: unknown, formData: FormData) {
     .insert({ user_id: user.id, theme_id: parsed.data.themeId, title: parsed.data.title, slug: parsed.data.slug, status: "draft" })
     .select("id")
     .single();
-  if (error || !inv) return { error: "Gagal membuat undangan." };
+  if (error || !inv) {
+    // 23505 = unique_violation (slug taken) — authoritative guard beyond the pre-check
+    if ((error as { code?: string } | null)?.code === "23505")
+      return { error: "Link sudah dipakai, pilih yang lain." };
+    return { error: "Gagal membuat undangan." };
+  }
 
   await supabase.from("invitation_data").insert({ invitation_id: inv.id });
   redirect(`/dashboard/invitation/${inv.id}/edit`);
@@ -85,7 +90,10 @@ async function setStatus(id: string, status: "active" | "inactive") {
     .from("invitations")
     .update({ status, ...(status === "active" ? { expires_at: expiresAt, published_at: new Date().toISOString() } : {}) })
     .eq("id", id);
-  revalidateTag(`invitation:${inv.slug}`, "max");
+  // Activate: SWR is fine. Deactivate: privacy — expire immediately so the
+  // public page stops serving the invitation on the very next request.
+  if (status === "active") revalidateTag(`invitation:${inv.slug}`, "max");
+  else updateTag(`invitation:${inv.slug}`);
   return { success: status === "active" ? "Undangan aktif." : "Undangan dinonaktifkan." };
 }
 
@@ -98,6 +106,6 @@ export async function deleteInvitation(id: string) {
   const { data: inv } = await supabase.from("invitations").select("slug, user_id").eq("id", id).maybeSingle();
   if (!inv || inv.user_id !== user.id) return { error: "Tidak diizinkan." };
   await supabase.from("invitations").delete().eq("id", id);
-  revalidateTag(`invitation:${inv.slug}`, "max");
+  updateTag(`invitation:${inv.slug}`); // immediate expiry (privacy)
   return { success: "Undangan dihapus." };
 }

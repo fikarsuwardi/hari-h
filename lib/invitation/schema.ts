@@ -15,7 +15,10 @@ const eventSchema = z.object({
   endTime: z.string().nullish(),
   venue: z.string().nullish(),
   address: z.string().nullish(),
-  mapsUrl: z.string().nullish(),
+  mapsUrl: z
+    .string()
+    .refine((v) => !v || /^https?:\/\//.test(v), "Link peta harus diawali http(s)://")
+    .nullish(),
 });
 
 export const invitationDataSchema = z.object({
@@ -27,7 +30,10 @@ export const invitationDataSchema = z.object({
     .nullish(),
   gallery: z.array(z.string()).default([]),
   prewedVideoUrl: z.string().nullish(),
-  musicUrl: z.string().nullish(),
+  musicUrl: z
+    .string()
+    .refine((v) => !v || /^https?:\/\//.test(v), "URL musik harus diawali http(s)://")
+    .nullish(),
   livestream: z.object({ platform: z.string(), url: z.string() }).nullish(),
   gift: z
     .array(
