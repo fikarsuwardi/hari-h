@@ -6,6 +6,8 @@ export type ThemeComponent = ComponentType<{ view: InvitationView; guestName?: s
 // Map component_key -> dynamic import default export.
 export const THEMES: Record<string, () => Promise<{ default: ThemeComponent }>> = {
   "minimalis-01": () => import("@/themes/minimalis-01"),
+  "elegan-01": () => import("@/themes/elegan-01"),
+  "floral-01": () => import("@/themes/floral-01"),
 };
 
 export const THEME_KEYS = Object.keys(THEMES);
