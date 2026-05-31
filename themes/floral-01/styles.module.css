@@ -1,0 +1,208 @@
+/* Floral-01 — soft romantic light aesthetic */
+.root {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fbf5f3;
+  color: #4a3b3b;
+  font-family: var(--font-jakarta), sans-serif;
+}
+
+.section {
+  padding: 60px 28px;
+  text-align: center;
+}
+
+/* Cover: full-height with soft gradient */
+.cover {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(160deg, #fff0ee 0%, #fbf5f3 40%, #f0f4ef 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative floral petal shapes using CSS */
+.cover::before {
+  content: "❀  ❀  ❀";
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 18px;
+  color: #c98a86;
+  opacity: 0.35;
+  letter-spacing: 0.5em;
+}
+
+.cover::after {
+  content: "❀  ❀  ❀";
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 18px;
+  color: #8aa07c;
+  opacity: 0.35;
+  letter-spacing: 0.5em;
+}
+
+.kicker {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #8aa07c;
+  font-weight: 600;
+}
+
+.display {
+  font-family: var(--font-fraunces), serif;
+  font-size: 42px;
+  line-height: 1.1;
+  margin: 6px 0;
+  font-style: italic;
+  color: #4a3b3b;
+}
+
+.h2 {
+  font-family: var(--font-fraunces), serif;
+  font-size: 24px;
+  margin: 0 0 4px;
+  font-style: italic;
+  color: #4a3b3b;
+}
+
+.muted {
+  color: #7a6060;
+  font-size: 14px;
+}
+
+/* Floral / curved divider */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px auto;
+  color: #c98a86;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #c98a86);
+}
+
+.divider::after {
+  background: linear-gradient(to left, transparent, #c98a86);
+}
+
+/* Soft white card */
+.card {
+  background: #ffffff;
+  border: 1px solid #f0ddd9;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(201, 138, 134, 0.08);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 2px solid #f0ddd9;
+}
+
+.eventGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.giftGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.mapLink {
+  color: #8aa07c;
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  text-decoration: none;
+  border-bottom: 1px dashed #8aa07c;
+  padding-bottom: 2px;
+}
+
+.guestLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 14px 24px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #f0ddd9;
+  border-radius: 12px;
+}
+
+.guestName {
+  font-family: var(--font-fraunces), serif;
+  font-size: 22px;
+  font-style: italic;
+  color: #4a3b3b;
+}
+
+.photoWrap {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 16px;
+  border: 3px solid #f0ddd9;
+  box-shadow: 0 4px 16px rgba(201, 138, 134, 0.15);
+}
+
+.photoWrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.accountNumber {
+  font-family: var(--font-fraunces), serif;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: #4a3b3b;
+  margin: 4px 0;
+}
+
+.closingText {
+  color: #7a6060;
+  line-height: 1.75;
+  font-size: 15px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.roseDot {
+  color: #c98a86;
+  font-size: 14px;
+}

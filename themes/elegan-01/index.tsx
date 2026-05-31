@@ -1,0 +1,36 @@
+import type { InvitationView } from "@/lib/invitation/types";
+import { MusicToggle } from "@/components/invitation/ui/music-toggle";
+import { RsvpSection } from "@/components/invitation/ui/rsvp-section";
+import {
+  Cover,
+  QuoteSection,
+  CoupleSection,
+  EventsSection,
+  GallerySection,
+  GiftSection,
+  Closing,
+} from "./sections";
+import s from "./styles.module.css";
+
+export default function Elegan01({
+  view,
+  guestName,
+}: {
+  view: InvitationView;
+  guestName?: string;
+}) {
+  const { data, title } = view;
+  return (
+    <main className={s.root}>
+      <Cover data={data} title={title} guestName={guestName} />
+      <QuoteSection data={data} />
+      <CoupleSection data={data} />
+      <EventsSection data={data} />
+      <GallerySection data={data} />
+      <GiftSection data={data} />
+      <RsvpSection slug={view.slug} guestName={guestName} />
+      <Closing data={data} />
+      {data.musicUrl && <MusicToggle src={data.musicUrl} />}
+    </main>
+  );
+}
