@@ -454,3 +454,17 @@ test("admin tanpa login redirect ke login", async ({ page }) => {
 **Type consistency:** Server actions `saveTheme`/`deleteTheme`/`savePackage`/`deletePackage`/`setUserRole` dipakai konsisten di form/list. `themeSchema`/`packageSchema` map camelCase→snake_case di action. `requireAdmin()` (layout) vs `adminClient()` (actions) dua jalur cek admin (layout untuk gate halaman, action untuk gate mutasi + RLS sebagai backstop). `THEME_KEYS` diekspor dari registry & dipakai di form.
 
 **Keamanan:** Gate ganda (server `requireAdmin` + RLS `is_admin()`). RLS admin pakai `security definer` `is_admin()` (search_path pinned). Bucket `themes` write admin-only. Tanpa service-role secret.
+
+## Known Issues / Deferred (dari final review Fase 5b)
+
+Sudah diperbaiki:
+- ✅ **CRITICAL — privilege escalation** (migrasi `0007`): trigger `guard_profile_protected_cols` mencegah user non-admin mengubah `role`/`account_status`/`plan_id`/`plan_expires_at` pada barisnya sendiri (policy `profiles_self_update` Fase 0 bersifat row-level). Diverifikasi live: non-admin `update({role:'admin'})` ditolak, update nama tetap boleh. Trigger mengizinkan admin & konteks tanpa-JWT (service-role utk job billing nanti).
+- ✅ `profiles_admin_update` ditambah `with check (is_admin())` (I1).
+- ✅ `setUserRole` cegah admin menurunkan role sendiri (I2, anti-lockout).
+- ✅ Policy delete bucket `themes` utk admin (M1, hindari orphan thumbnail).
+
+Di-defer:
+- Guard "last admin" (selain self-demote) — belum; risiko rendah.
+- E2E logged-in-non-admin redirect + regresi escalation DB — diverifikasi live, belum jadi test commit (hindari churn data uji).
+- Upload thumbnail validasi MIME server-side (admin-only write, risiko kecil).
+- User `demo@harih.local` (domain `.local`) tak bisa login via GoTrue — pakai email asli untuk akun admin nyata.

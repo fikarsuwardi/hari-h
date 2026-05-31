@@ -7,9 +7,9 @@ import { themeSchema, packageSchema } from "@/lib/validation/admin";
 async function adminClient() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { supabase, ok: false as const };
+  if (!user) return { supabase, ok: false as const, userId: null };
   const { data: p } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
-  return { supabase, ok: p?.role === "admin" };
+  return { supabase, ok: p?.role === "admin", userId: user.id };
 }
 
 export async function saveTheme(_prev: unknown, formData: FormData) {
@@ -73,8 +73,10 @@ export async function deletePackage(id: string) {
 }
 
 export async function setUserRole(userId: string, role: "user" | "admin" | "reseller") {
-  const { supabase, ok } = await adminClient();
+  const { supabase, ok, userId: selfId } = await adminClient();
   if (!ok) return { error: "Akses ditolak." };
+  // Cegah admin menurunkan rolenya sendiri (anti-lockout operasional).
+  if (userId === selfId && role !== "admin") return { error: "Tidak bisa menurunkan role akun sendiri." };
   const { data, error } = await supabase.from("profiles").update({ role }).eq("id", userId).select("id");
   if (error) return { error: "Gagal." };
   if (!data?.length) return { error: "Tidak ditemukan." };
