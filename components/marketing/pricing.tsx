@@ -12,6 +12,7 @@ export async function Pricing() {
     .select("id, name, price, original_price, duration_days, features")
     .eq("is_active", true)
     .order("price");
+  if (!packages?.length) return null;
   return (
     <section id="harga" className="max-w-6xl mx-auto px-5 py-16">
       <h2 className="font-display text-3xl text-ink text-center">Harga yang Sederhana</h2>

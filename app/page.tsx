@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     title: "Hari-H — Undangan Pernikahan Digital",
     description: "Undangan pernikahan digital elegan, praktis, mudah dibagikan.",
     type: "website",
+    url: "/",
   },
 };
 
