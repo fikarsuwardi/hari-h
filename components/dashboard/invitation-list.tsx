@@ -44,6 +44,7 @@ export function InvitationList({ items }: { items: Item[] }) {
             <div className="flex flex-wrap gap-2 text-sm">
               <Link href={`/dashboard/invitation/${it.id}/edit`} className="border border-line-strong rounded-sm px-3 py-1.5">Edit</Link>
               <Link href={`/dashboard/invitation/${it.id}/preview`} className="border border-line-strong rounded-sm px-3 py-1.5">Preview</Link>
+              <Link href={`/dashboard/invitation/${it.id}/rsvp`} className="border border-line-strong rounded-sm px-3 py-1.5">RSVP</Link>
               <button disabled={pending} onClick={() => share(it.slug)} className="border border-line-strong rounded-sm px-3 py-1.5">Bagikan</button>
               {it.status === "active"
                 ? <button disabled={pending} onClick={() => run(() => deactivateInvitation(it.id))} className="border border-warn rounded-sm px-3 py-1.5 text-warn">Nonaktifkan</button>

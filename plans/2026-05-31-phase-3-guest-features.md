@@ -476,3 +476,17 @@ test("tamu kirim RSVP di undangan demo lalu muncul di buku tamu", async ({ page 
 **Type consistency:** `PublicRsvp { guestName, attendance, message, createdAt }` dari RPC (camelCase di json_build_object) konsisten dgn pemakaian di `RsvpSection`/lib. Server actions `submitRsvp(slug, FormData)`, `getPublicRsvps(slug)`, `toggleRsvpSpam(id, bool)`, `deleteRsvp(id)` dipakai konsisten. RPC params (`p_slug,p_name,p_attendance,p_headcount,p_message`) cocok dengan pemanggilan `.rpc(...)`. Enum attendance hadir/tidak/ragu konsisten DB↔Zod↔UI.
 
 **Keamanan:** submit via security-definer RPC (hanya undangan active), policy anon-insert dibuang (menutup review Fase 0 #4). Owner update/delete RSVP via RLS policy baru + cek sesi di action. RPC publik tidak mengembalikan kolom sensitif & exclude spam.
+
+## Known Issues / Deferred (dari final code review Fase 3)
+
+Sudah diperbaiki:
+- ✅ Moderasi (spam/hapus) pakai `.select("id")` + cek baris → tidak lagi "false success" saat RLS memblokir baris milik orang lain.
+- ✅ Export CSV: sanitasi formula injection (sel diawali `= + - @` diberi prefix `'`).
+- ✅ RPC `submit_rsvp` cap headcount `least(20, ...)` (defense-in-depth, samai Zod) + verifikasi 999→20.
+- ✅ Label dashboard: "Total entri (termasuk spam)".
+- ✅ Key buku tamu pakai `createdAt` (bukan index).
+
+Di-defer:
+- **Rate-limit / anti-spam submit anonim** (I-3): belum ada throttle/captcha. Diterima untuk launch (target obscure & berumur pendek). TODO tercatat di `0004_rsvp.sql`. Saat hardening: rate-limit per IP/undangan atau RSVP publik default `pending` (perlu approval owner sebelum tampil).
+- **Realtime dashboard**: pakai refresh manual; subscribe Supabase Realtime menyusul.
+- **Love story / livestream / prewed video**: data didukung schema, UI menyusul.
