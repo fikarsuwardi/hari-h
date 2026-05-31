@@ -13,9 +13,9 @@ Diturunkan langsung dari analisis produk asli (`../example/`).
 
 ## 2. Auth
 - Register (nama, email, no WA, password), login, lupa password.
-- Verifikasi email (Resend).
+- **Pendaftaran sederhana ala walimatul: TANPA OTP / verifikasi email.** Daftar → langsung login (auto-login) → masuk dashboard. (Supabase "Confirm email" dimatikan.)
 - Status akun: `trial` otomatis saat daftar (2 hari), `active`, `expired`.
-- Redirect pattern pasca-login ke `/dashboard/invitation`.
+- Redirect pattern pasca-login ke `/dashboard`.
 
 ## 3. Dashboard User
 - **Galeri tema** (`/dashboard/invitation/create`): tab kategori, search, sort (A-Z / Terbaru / Populer), kartu tema (Lihat → demo, Pilih → modal).

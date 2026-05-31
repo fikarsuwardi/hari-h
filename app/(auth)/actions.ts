@@ -30,13 +30,27 @@ export async function signUp(_prev: unknown, formData: FormData) {
   }
   const { email, password, fullName, phone } = parsed.data;
   const supabase = await createClient();
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: { data: { full_name: fullName, phone } },
   });
   if (error) return { error: error.message };
-  return { success: "Cek email untuk verifikasi, lalu masuk." };
+
+  // Pendaftaran sederhana ala walimatul: tanpa OTP / verifikasi email.
+  // Langsung login. Jika signUp tidak mengembalikan sesi (artinya "Confirm
+  // email" masih aktif di Supabase), coba masuk eksplisit.
+  if (!data.session) {
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (signInError) {
+      return { success: "Akun berhasil dibuat. Silakan masuk." };
+    }
+  }
+  revalidatePath("/", "layout");
+  redirect("/dashboard");
 }
 
 export async function signOut() {
