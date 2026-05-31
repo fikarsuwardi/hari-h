@@ -36,6 +36,12 @@ export function InvitationEditor({
   function removeGift(i: number) {
     setData((d) => ({ ...d, gift: (d.gift ?? []).filter((_, idx) => idx !== i) }));
   }
+  function addGalleryUrl(url: string) {
+    setData((d) => ({ ...d, gallery: [...d.gallery, url] }));
+  }
+  function removeGalleryUrl(i: number) {
+    setData((d) => ({ ...d, gallery: d.gallery.filter((_, idx) => idx !== i) }));
+  }
 
   function save() {
     start(async () => {
@@ -131,6 +137,20 @@ export function InvitationEditor({
       <div className={sec}>
         <h2 className={h}>Musik Latar</h2>
         <input placeholder="URL file audio (mp3)" value={data.musicUrl ?? ""} onChange={(e) => setData((d) => ({ ...d, musicUrl: e.target.value }))} className={input} />
+      </div>
+
+      <div className={sec}>
+        <h2 className={h}>Galeri Foto</h2>
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          {data.gallery.map((url, i) => (
+            <div key={i} className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element -- uploaded gallery image */}
+              <img src={url} alt="" className="w-full h-24 object-cover rounded" />
+              <button onClick={() => removeGalleryUrl(i)} className="absolute top-1 right-1 bg-neg text-white rounded-full w-5 h-5 text-xs">×</button>
+            </div>
+          ))}
+        </div>
+        <ImageUpload userId={userId} invitationId={id} label="Tambah foto galeri" onChange={addGalleryUrl} />
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-line p-3 flex items-center justify-end gap-3">
