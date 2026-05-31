@@ -6,7 +6,7 @@ const items = [
   { label: "Beli Paket", href: "/dashboard/upgrade" },
 ];
 
-export function Sidebar() {
+export function Sidebar({ isAdmin }: { isAdmin?: boolean }) {
   return (
     <aside className="w-60 shrink-0 border-r border-line bg-card p-4">
       <div className="font-display text-xl text-brand mb-6">Hari-H</div>
@@ -20,6 +20,14 @@ export function Sidebar() {
             {it.label}
           </Link>
         ))}
+        {isAdmin && (
+          <Link
+            href="/admin"
+            className="block rounded-sm px-3 py-2 text-deposit hover:bg-paper-2 mt-4 text-sm font-medium"
+          >
+            Admin
+          </Link>
+        )}
       </nav>
     </aside>
   );
