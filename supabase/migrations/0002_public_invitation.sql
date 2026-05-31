@@ -26,7 +26,10 @@ as $$
   from invitations i
   join themes t on t.id = i.theme_id
   left join invitation_data d on d.invitation_id = i.id
-  where i.slug = p_slug and i.status = 'active'
+  where i.slug = p_slug
+    and i.status = 'active'
+    and (i.expires_at is null or i.expires_at > now())
+    and t.is_active = true
   limit 1;
 $$;
 

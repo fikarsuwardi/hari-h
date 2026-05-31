@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { notFound } from "next/navigation";
 import { getPublicInvitation } from "@/lib/invitation/get-public";
 
 export const size = { width: 1200, height: 630 };
@@ -8,9 +9,10 @@ export const alt = "Undangan Pernikahan";
 export default async function OgImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const view = await getPublicInvitation(slug);
-  const groom = view?.data.couple.groom.name ?? "";
-  const bride = view?.data.couple.bride.name ?? "";
-  const date = view?.data.events[0]?.date
+  if (!view) notFound();
+  const groom = view.data.couple.groom.name;
+  const bride = view.data.couple.bride.name;
+  const date = view.data.events[0]?.date
     ? new Date(view.data.events[0].date).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })
     : "";
   return new ImageResponse(

@@ -1,22 +1,22 @@
 export type Person = {
   name: string;
-  fullName?: string;
-  photoUrl?: string;
-  parents?: string;
-  instagram?: string;
+  fullName?: string | null;
+  photoUrl?: string | null;
+  parents?: string | null;
+  instagram?: string | null;
 };
 
 export type EventItem = {
   name: string;
   date: string; // ISO yyyy-mm-dd
-  startTime?: string;
-  endTime?: string;
-  venue?: string;
-  address?: string;
-  mapsUrl?: string;
+  startTime?: string | null;
+  endTime?: string | null;
+  venue?: string | null;
+  address?: string | null;
+  mapsUrl?: string | null;
 };
 
-export type StoryItem = { title: string; date?: string; text: string };
+export type StoryItem = { title: string; date?: string | null; text: string };
 export type GiftAccount = {
   type: "bank" | "ewallet";
   bank?: string;

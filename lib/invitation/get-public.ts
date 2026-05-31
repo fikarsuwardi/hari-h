@@ -14,7 +14,10 @@ async function fetchRaw(slug: string): Promise<InvitationView | null> {
   if (error || !data) return null;
   const row = data as { title: string; slug: string; themeKey: string; data: unknown };
   const parsed = invitationDataSchema.safeParse(row.data);
-  if (!parsed.success) return null;
+  if (!parsed.success) {
+    console.error(`[get-public] invalid invitation data for slug "${slug}":`, parsed.error.issues);
+    return null;
+  }
   return { title: row.title, slug: row.slug, themeKey: row.themeKey, data: parsed.data };
 }
 

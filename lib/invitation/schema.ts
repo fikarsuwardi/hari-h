@@ -2,20 +2,20 @@ import { z } from "zod";
 
 const personSchema = z.object({
   name: z.string().min(1),
-  fullName: z.string().optional(),
-  photoUrl: z.string().optional(),
-  parents: z.string().optional(),
-  instagram: z.string().optional(),
+  fullName: z.string().nullish(),
+  photoUrl: z.string().nullish(),
+  parents: z.string().nullish(),
+  instagram: z.string().nullish(),
 });
 
 const eventSchema = z.object({
   name: z.string().min(1),
   date: z.string().min(1),
-  startTime: z.string().optional(),
-  endTime: z.string().optional(),
-  venue: z.string().optional(),
-  address: z.string().optional(),
-  mapsUrl: z.string().optional(),
+  startTime: z.string().nullish(),
+  endTime: z.string().nullish(),
+  venue: z.string().nullish(),
+  address: z.string().nullish(),
+  mapsUrl: z.string().nullish(),
 });
 
 export const invitationDataSchema = z.object({
