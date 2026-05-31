@@ -4,6 +4,7 @@ const items = [
   { label: "Undangan", href: "/dashboard/invitation" },
   { label: "Tema Undangan", href: "/dashboard/invitation/create" },
   { label: "Beli Paket", href: "/dashboard/upgrade" },
+  { label: "Reseller", href: "/dashboard/reseller" },
 ];
 
 export function Sidebar({ isAdmin }: { isAdmin?: boolean }) {
