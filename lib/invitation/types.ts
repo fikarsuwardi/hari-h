@@ -27,14 +27,14 @@ export type GiftAccount = {
 export type InvitationData = {
   couple: { groom: Person; bride: Person };
   events: EventItem[];
-  quotes?: { text: string; source?: string };
-  loveStory?: StoryItem[];
+  quotes?: { text: string; source?: string } | null;
+  loveStory?: StoryItem[] | null;
   gallery: string[];
-  prewedVideoUrl?: string;
-  musicUrl?: string;
-  livestream?: { platform: string; url: string };
-  gift?: GiftAccount[];
-  settings?: { primaryColor?: string };
+  prewedVideoUrl?: string | null;
+  musicUrl?: string | null;
+  livestream?: { platform: string; url: string } | null;
+  gift?: GiftAccount[] | null;
+  settings?: { primaryColor?: string } | null;
 };
 
 export type InvitationView = {

@@ -1,11 +1,16 @@
 import { unstable_cache } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@supabase/supabase-js";
 import { invitationDataSchema } from "./schema";
 import type { InvitationView } from "./types";
 
+// Anon client for public read-only RPC — no cookies needed.
+const supabaseAnon = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
 async function fetchRaw(slug: string): Promise<InvitationView | null> {
-  const supabase = await createClient();
-  const { data, error } = await supabase.rpc("get_public_invitation", { p_slug: slug });
+  const { data, error } = await supabaseAnon.rpc("get_public_invitation", { p_slug: slug });
   if (error || !data) return null;
   const row = data as { title: string; slug: string; themeKey: string; data: unknown };
   const parsed = invitationDataSchema.safeParse(row.data);

@@ -21,14 +21,14 @@ const eventSchema = z.object({
 export const invitationDataSchema = z.object({
   couple: z.object({ groom: personSchema, bride: personSchema }),
   events: z.array(eventSchema).default([]),
-  quotes: z.object({ text: z.string(), source: z.string().optional() }).optional(),
+  quotes: z.object({ text: z.string(), source: z.string().optional() }).nullish(),
   loveStory: z
     .array(z.object({ title: z.string(), date: z.string().optional(), text: z.string() }))
-    .optional(),
+    .nullish(),
   gallery: z.array(z.string()).default([]),
-  prewedVideoUrl: z.string().optional(),
-  musicUrl: z.string().optional(),
-  livestream: z.object({ platform: z.string(), url: z.string() }).optional(),
+  prewedVideoUrl: z.string().nullish(),
+  musicUrl: z.string().nullish(),
+  livestream: z.object({ platform: z.string(), url: z.string() }).nullish(),
   gift: z
     .array(
       z.object({
@@ -38,6 +38,6 @@ export const invitationDataSchema = z.object({
         holder: z.string(),
       }),
     )
-    .optional(),
-  settings: z.object({ primaryColor: z.string().optional() }).optional(),
+    .nullish(),
+  settings: z.object({ primaryColor: z.string().optional() }).nullish(),
 });
