@@ -1,4 +1,6 @@
 -- Submit RSVP hanya untuk undangan aktif (security definer).
+-- TODO (Fase hardening): tambah rate-limit per IP/undangan atau moderasi
+-- (RSVP publik default 'pending' sebelum tampil) untuk cegah spam anonim.
 create or replace function public.submit_rsvp(
   p_slug text, p_name text, p_attendance text, p_headcount int, p_message text
 )
@@ -27,7 +29,7 @@ begin
   end if;
 
   insert into rsvps (invitation_id, guest_name, attendance, headcount, message)
-  values (v_id, left(trim(p_name), 120), p_attendance::attendance, greatest(1, coalesce(p_headcount, 1)), left(coalesce(p_message, ''), 1000));
+  values (v_id, left(trim(p_name), 120), p_attendance::attendance, least(20, greatest(1, coalesce(p_headcount, 1))), left(coalesce(p_message, ''), 1000));
 
   return json_build_object('ok', true);
 end;

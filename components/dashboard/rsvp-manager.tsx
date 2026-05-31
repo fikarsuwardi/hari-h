@@ -18,9 +18,12 @@ export function RsvpManager({ items }: { items: Item[] }) {
     start(async () => { const r = await fn(); setMsg(r.error ?? r.success ?? ""); router.refresh(); });
   }
   function exportCsv() {
+    // Cegah CSV/formula injection: sel yang diawali = + - @ (atau tab/CR) diberi
+    // prefix kutip tunggal agar tidak dieksekusi Excel/Sheets.
+    const sanitize = (c: string) => (/^[=+\-@\t\r]/.test(c) ? `'${c}` : c);
     const rows = [["Nama", "Kehadiran", "Jumlah", "Ucapan", "Waktu"],
       ...items.map((i) => [i.guest_name, i.attendance, String(i.headcount), (i.message ?? "").replace(/\n/g, " "), i.created_at])];
-    const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const csv = rows.map((r) => r.map((c) => `"${sanitize(String(c)).replace(/"/g, '""')}"`).join(",")).join("\n");
     const url = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
     const a = document.createElement("a"); a.href = url; a.download = "rsvp.csv"; a.click(); URL.revokeObjectURL(url);
   }
@@ -29,7 +32,7 @@ export function RsvpManager({ items }: { items: Item[] }) {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-4 items-center justify-between">
-        <p className="text-sm text-ink-2">Total entri: <strong>{total}</strong> · Total hadir: <strong>{hadir}</strong> orang</p>
+        <p className="text-sm text-ink-2">Total entri (termasuk spam): <strong>{total}</strong> · Total hadir: <strong>{hadir}</strong> orang</p>
         <button onClick={exportCsv} className="text-sm border border-line-strong rounded-sm px-3 py-1.5">Export CSV</button>
       </div>
       {msg && <p className="text-sm text-pos">{msg}</p>}

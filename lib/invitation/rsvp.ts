@@ -40,15 +40,19 @@ async function ownerGuard() {
 export async function toggleRsvpSpam(rsvpId: string, isSpam: boolean) {
   const { supabase, ok } = await ownerGuard();
   if (!ok) return { error: "Sesi habis." };
-  const { error } = await supabase.from("rsvps").update({ is_spam: isSpam }).eq("id", rsvpId);
+  // RLS (rsvp_owner_update) hanya mengenai baris milik sendiri; .select() agar
+  // bisa membedakan "berhasil" dari "diblokir RLS / tidak ditemukan" (0 baris).
+  const { data, error } = await supabase.from("rsvps").update({ is_spam: isSpam }).eq("id", rsvpId).select("id");
   if (error) return { error: "Gagal memperbarui." };
+  if (!data?.length) return { error: "Tidak ditemukan atau bukan milik Anda." };
   return { success: "Diperbarui." };
 }
 
 export async function deleteRsvp(rsvpId: string) {
   const { supabase, ok } = await ownerGuard();
   if (!ok) return { error: "Sesi habis." };
-  const { error } = await supabase.from("rsvps").delete().eq("id", rsvpId);
+  const { data, error } = await supabase.from("rsvps").delete().eq("id", rsvpId).select("id");
   if (error) return { error: "Gagal menghapus." };
+  if (!data?.length) return { error: "Tidak ditemukan atau bukan milik Anda." };
   return { success: "Dihapus." };
 }

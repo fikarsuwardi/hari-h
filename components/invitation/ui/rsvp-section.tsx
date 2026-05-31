@@ -47,7 +47,7 @@ export function RsvpSection({ slug, guestName }: { slug: string; guestName?: str
 
       <div style={{ marginTop: 32, display: "grid", gap: 12, maxWidth: 360, margin: "32px auto 0", textAlign: "left" }}>
         {list.map((r, i) => (
-          <div key={i} style={{ background: "#fff", border: "1px solid #ece2cf", borderRadius: 12, padding: 14 }}>
+          <div key={`${r.createdAt}-${i}`} style={{ background: "#fff", border: "1px solid #ece2cf", borderRadius: 12, padding: 14 }}>
             <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
               <strong style={{ fontSize: 14 }}>{r.guestName}</strong>
               <span style={{ fontSize: 12, color: "#7c8b78" }}>{label[r.attendance as keyof typeof label] ?? r.attendance}</span>
